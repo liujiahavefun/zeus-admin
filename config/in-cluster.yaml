@@ -22,9 +22,6 @@ casbin:
 lang:
   types: zh-CN|en-US
   names: 简体中文|English
-<<<<<<< HEAD
-domain: bullteam.local
-=======
 domain: bullteam.local
 dingtalk:
   CorpId:
@@ -39,4 +36,3 @@ email:
   host: smtp.qq.com
   port: 25
   from: xxxxxx@qq.com
->>>>>>> 04f994dabce19dcf6bf49af0b07cf9097e15712b

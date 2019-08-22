@@ -25,7 +25,7 @@ func Setup() {
 	log.Debug(conn)
 	db, err = gorm.Open("mysql", conn)
 	if err != nil {
-		log.Fatal(fmt.Sprintf("Failed to connect database %s", err.Error()))
+		log.Fatal(fmt.Sprintf("Failed to connect database, err: %s", err.Error()))
 	} else {
 		db.DB().SetMaxIdleConns(viper.GetInt("mysql.pool.min"))
 		db.DB().SetMaxOpenConns(viper.GetInt("mysql.pool.max"))

@@ -14,7 +14,7 @@ var (
 
 // SetUp permission handler
 func SetUp() {
-	enforcer = casbin.NewEnforcer(viper.GetString("casbin.model.rule_0"), adapter.NewMysqlAdapter())
+	enforcer, _ = casbin.NewEnforcer(viper.GetString("casbin.model.rule_0"), adapter.NewMysqlAdapter())
 	//Distributed watcher
 	w, _ := rediswatcher.NewWatcher(viper.GetString("redis.host"), rediswatcher.Password(viper.GetString("redis.auth")))
 	enforcer.SetWatcher(w)
@@ -28,19 +28,21 @@ func SetUp() {
 
 // SetUpForTest : for unit tests
 func SetUpForTest(dir string) {
-	enforcer = casbin.NewEnforcer(dir+"/rbac_model_0.conf", dir+"/perm_test.csv")
+	enforcer, _ = casbin.NewEnforcer(dir+"/rbac_model_0.conf", dir+"/perm_test.csv")
 }
 
 // AddGroup : method of group policy adding
 //first : user
 //second : group
 func AddGroup(params ...interface{}) bool {
-	return enforcer.AddGroupingPolicy(params...)
+	ret, _ := enforcer.AddGroupingPolicy(params...)
+	return ret
 }
 
 // DelGroup : method of group policy deleting
 func DelGroup(params ...interface{}) bool {
-	return enforcer.RemoveGroupingPolicy(params...)
+	ret, _ := enforcer.RemoveGroupingPolicy(params...)
+	return ret
 }
 
 // GetGroupsByUser : get groups by specific user
@@ -51,22 +53,26 @@ func GetGroupsByUser(userId string) [][]string {
 // AddPerm : method for permission policy adding
 //sub,obj,act,domain
 func AddPerm(params ...interface{}) bool {
-	return enforcer.AddPolicy(params...)
+	ret, _ := enforcer.AddPolicy(params...)
+	return ret
 }
 
 // DelPerm : delete permission policy
 func DelPerm(params ...interface{}) bool {
-	return enforcer.RemovePolicy(params...)
+	ret, _ := enforcer.RemovePolicy(params...)
+	return ret
 }
 
 // DeleteFilteredPerm
 func DelFilteredPerm(fieldIndex int, params ...string) bool {
-	return enforcer.RemoveFilteredPolicy(fieldIndex, params...)
+	ret, _ := enforcer.RemoveFilteredPolicy(fieldIndex, params...)
+	return ret
 }
 
 // Enforce : check permission
 func Enforce(params ...interface{}) bool {
-	return enforcer.Enforce(params...)
+	ret, _ := enforcer.Enforce(params...)
+	return ret
 }
 
 // DelRoleByName : delete all specific role policy of domain
